@@ -1,6 +1,8 @@
 package com.troyszc.firstHibernate.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "instructor")
@@ -23,6 +25,10 @@ public class Instructor {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
+
+    @OneToMany(mappedBy = "instructor",
+               cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Course> courseList;
 
     public Instructor() {
 
@@ -74,6 +80,14 @@ public class Instructor {
         this.instructorDetail = instructorDetail;
     }
 
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
     @Override
     public String toString() {
         return "Instructor{" +
@@ -83,5 +97,14 @@ public class Instructor {
                 ", email='" + email + '\'' +
                 ", instructorDetail=" + instructorDetail +
                 '}';
+    }
+
+    //convenience method for bi-directional relationship
+    public void add (Course tempCourse) {
+        if (courseList == null) {
+            courseList = new ArrayList<>();
+        }
+        courseList.add(tempCourse);
+        tempCourse.setInstructor(this);
     }
 }
