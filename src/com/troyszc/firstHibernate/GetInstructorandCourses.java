@@ -30,8 +30,8 @@ public class GetInstructorandCourses {
 
             //get instructor and corresponding courses
             Instructor theInstructor = session.get(Instructor.class, instructorId);
-            System.out.println("The instructor retrieved is: " + theInstructor);
-            System.out.println("The instructor's courses are: " + theInstructor.getCourseList());
+            System.out.println("The instructor retrieved is: " + theInstructor + "\n");
+            System.out.println("The instructor's courses are: " + theInstructor.getCourseList() + "\n");
 
             //commit transaction
             session.getTransaction().commit();
